@@ -229,15 +229,6 @@
         
         if (matchesKeywords(container, allKeywords)) {
           hideElement(container, "Text match");
-          
-          // Try to hide larger parent containers that might contain videos/content
-          const mainContainer = container.closest('[role="main"], main, .main-content, [data-testid="article"]');
-          if (mainContainer && mainContainer !== container && !mainContainer.dataset.orangeFilterHidden) {
-            // Check if parent also contains matching keywords (to avoid hiding unrelated content)
-            if (matchesKeywords(mainContainer, allKeywords)) {
-              hideElement(mainContainer, "Parent container match");
-            }
-          }
         }
       });
     }
