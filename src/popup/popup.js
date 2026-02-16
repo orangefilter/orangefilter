@@ -118,7 +118,7 @@ async function init() {
   const donateBtn = document.getElementById('donateBtn');
   if (donateBtn) {
     donateBtn.addEventListener('click', () => {
-      chrome.tabs.create({ url: 'https://bjorn12341234.github.io/adblocker' });
+      chrome.tabs.create({ url: 'https://samsasolutions.com/orangefilter' });
     });
   }
 }
