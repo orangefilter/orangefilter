@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary SEO -->
+    <title>The Orange Filter - Block Political Content from Your Feed | Free Chrome Extension</title>
+    <meta name="description" content="The Orange Filter is a free Chrome extension that detects and hides unwanted political content from your browsing. 100% private, runs offline. Install in one click.">
+    <link rel="canonical" href="https://bjorn12341234.github.io/adblocker/">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="The Orange Filter Project">
+    <meta name="keywords" content="chrome extension, content filter, block political content, news filter, browser extension, content blocker, privacy extension">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="The Orange Filter - Block Political Content from Your Feed">
+    <meta property="og:description" content="Free Chrome extension that detects and hides unwanted political content. 100% private, works offline. No tracking, no data collection.">
+    <meta property="og:url" content="https://bjorn12341234.github.io/adblocker/">
+    <meta property="og:site_name" content="The Orange Filter">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The Orange Filter - Block Political Content from Your Feed">
+    <meta name="twitter:description" content="Free Chrome extension that hides political content from your browsing. 100% private, runs entirely offline.">
+
+    <!-- Structured Data: SoftwareApplication -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "The Orange Filter",
+        "description": "A free browser extension that detects and hides unwanted political content from your browsing experience. Runs 100% offline with no data collection.",
+        "url": "https://bjorn12341234.github.io/adblocker/",
+        "applicationCategory": "BrowserApplication",
+        "operatingSystem": "Chrome",
+        "softwareVersion": "1.0",
+        "downloadUrl": "https://bjorn12341234.github.io/adblocker/the-orange-filter-v1.zip",
+        "featureList": "Smart Text Blocking, Smart Image Detection, 100% Offline Processing, Zero Data Collection",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "author": {
+            "@type": "Organization",
+            "name": "The Orange Filter Project",
+            "url": "https://github.com/Bjorn12341234/adblocker"
+        }
+    }
+    </script>
+
+    <!-- Structured Data: FAQPage -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Is The Orange Filter free?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, The Orange Filter is completely free to use with no premium tiers, subscriptions, or hidden costs."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Does The Orange Filter collect my data?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. The Orange Filter runs 100% offline on your device. It collects zero data, uses no analytics, and never transmits anything to external servers."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How does the image detection work?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The Orange Filter uses TensorFlow.js to run a machine learning model directly in your browser. It analyzes images locally on your device in real-time to identify and blur political content. No images ever leave your computer."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Which browsers are supported?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The Orange Filter currently supports Google Chrome. Support for Firefox and Edge is planned for future releases."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can I whitelist specific websites?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. The Orange Filter includes a whitelist feature that lets you disable filtering on specific websites where you want to see all content unfiltered."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How do I install The Orange Filter?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Download the extension zip file from our website, extract it, then go to chrome://extensions, enable Developer Mode, click 'Load unpacked', and select the extracted folder. The filter starts working immediately."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <!-- Structured Data: WebPage -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "The Orange Filter - Block Political Content from Your Feed",
+        "description": "Landing page for The Orange Filter, a free privacy-first Chrome extension that filters unwanted political content.",
+        "url": "https://bjorn12341234.github.io/adblocker/",
+        "inLanguage": "en",
+        "isPartOf": {
+            "@type": "WebSite",
+            "name": "The Orange Filter",
+            "url": "https://bjorn12341234.github.io/adblocker/"
+        },
+        "about": {
+            "@type": "SoftwareApplication",
+            "name": "The Orange Filter"
+        }
+    }
+    </script>
+
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Skip navigation link */
+        .skip-link {
+            position: absolute;
+            top: -50px;
+            left: 0;
+            background: #1a1a1a;
+            color: #fff;
+            padding: 10px 20px;
+            z-index: 200;
+            font-size: 0.95rem;
+            transition: top 0.2s;
+        }
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* Focus styles */
+        :focus-visible {
+            outline: 3px solid #ff9800;
+            outline-offset: 2px;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header / Nav */
+        .site-header {
+            background: #ff9800;
+            color: white;
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 20px;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+        .nav-brand {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+        .nav-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: 4px 0;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s;
+        }
+        .nav-links a:hover,
+        .nav-links a:focus {
+            border-bottom-color: white;
+        }
+        .nav-cta {
+            background: white;
+            color: #e65100 !important;
+            padding: 8px 18px !important;
+            border-radius: 6px;
+            border-bottom: none !important;
+            font-weight: 700 !important;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .nav-cta:hover,
+        .nav-cta:focus {
+            background: #fff3e0;
+            transform: translateY(-1px);
+        }
+
+        /* Mobile nav */
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 4px 8px;
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 5rem 0 4rem;
+        }
+        h1 {
+            margin: 0 0 1rem;
+            font-size: 2.8rem;
+            line-height: 1.2;
+            color: #1a1a1a;
+        }
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: #555;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        .btn {
+            display: inline-block;
+            background: #ff9800;
+            color: white;
+            padding: 16px 32px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin: 8px;
+            border: 2px solid #ff9800;
+            transition: background 0.2s, transform 0.2s;
+            cursor: pointer;
+        }
+        .btn:hover,
+        .btn:focus {
+            background: #e65100;
+            border-color: #e65100;
+            transform: translateY(-1px);
+        }
+        .btn-outline {
+            background: transparent;
+            color: #e65100;
+        }
+        .btn-outline:hover,
+        .btn-outline:focus {
+            background: #fff3e0;
+            color: #e65100;
+        }
+        .btn-large {
+            padding: 18px 40px;
+            font-size: 1.2rem;
+        }
+        .cta-subtext {
+            font-size: 0.9rem;
+            color: #777;
+            margin-top: 10px;
+        }
+
+        /* Trust bar */
+        .trust-bar {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            padding: 2rem 0;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+            margin: 0 auto;
+            max-width: 700px;
+        }
+        .trust-item {
+            text-align: center;
+        }
+        .trust-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #e65100;
+            display: block;
+        }
+        .trust-label {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        /* Section styling */
+        .section {
+            padding: 4rem 0;
+        }
+        .section-alt {
+            background: white;
+        }
+        .section-heading {
+            text-align: center;
+            font-size: 2rem;
+            margin: 0 0 0.5rem;
+            color: #1a1a1a;
+        }
+        .section-subheading {
+            text-align: center;
+            color: #666;
+            font-size: 1.1rem;
+            margin: 0 0 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Features */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .feature-card {
+            background: white;
+            padding: 28px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .section-alt .feature-card {
+            background: #f9f9f9;
+        }
+        .feature-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+        }
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+            display: block;
+        }
+        .feature-card h3 {
+            margin: 0 0 8px;
+            font-size: 1.2rem;
+            color: #1a1a1a;
+        }
+        .feature-card p {
+            margin: 0;
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        /* How it works */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 32px;
+            counter-reset: step;
+        }
+        .step {
+            text-align: center;
+            position: relative;
+        }
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background: #ff9800;
+            color: white;
+            border-radius: 50%;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .step h3 {
+            margin: 0 0 8px;
+            font-size: 1.15rem;
+            color: #1a1a1a;
+        }
+        .step p {
+            color: #555;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        /* FAQ */
+        .faq-list {
+            max-width: 720px;
+            margin: 0 auto;
+        }
+        .faq-item {
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .faq-item summary {
+            padding: 20px 0;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: #1a1a1a;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-item summary::-webkit-details-marker {
+            display: none;
+        }
+        .faq-item summary::after {
+            content: "+";
+            font-size: 1.4rem;
+            font-weight: 300;
+            color: #ff9800;
+            transition: transform 0.2s;
+            flex-shrink: 0;
+            margin-left: 16px;
+        }
+        .faq-item[open] summary::after {
+            content: "\2212";
+        }
+        .faq-answer {
+            padding: 0 0 20px;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        /* Donate / CTA section */
+        .final-cta {
+            text-align: center;
+            padding: 4rem 0;
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+        }
+        .final-cta h2 {
+            font-size: 2rem;
+            margin: 0 0 1rem;
+            color: #1a1a1a;
+        }
+        .final-cta p {
+            font-size: 1.1rem;
+            color: #555;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Footer */
+        .site-footer {
+            text-align: center;
+            padding: 2rem 20px;
+            color: #666;
+            font-size: 0.9rem;
+            border-top: 1px solid #e0e0e0;
+        }
+        .footer-links {
+            list-style: none;
+            margin: 0 0 12px;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+        .footer-links a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover,
+        .footer-links a:focus {
+            color: #ff9800;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            h1 { font-size: 2rem; }
+            .hero { padding: 3rem 0 2.5rem; }
+            .hero-subtitle { font-size: 1.05rem; }
+            .section { padding: 3rem 0; }
+            .section-heading { font-size: 1.6rem; }
+            .trust-bar { gap: 24px; }
+            .nav-links { display: none; }
+            .nav-toggle { display: block; }
+            .nav-links.open {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #ff9800;
+                padding: 16px 20px;
+                gap: 12px;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Skip navigation -->
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- Header with navigation -->
+<header class="site-header" role="banner">
+    <nav class="nav-inner" aria-label="Primary navigation">
+        <a href="https://bjorn12341234.github.io/adblocker/" class="nav-brand" aria-label="The Orange Filter Home">The Orange Filter</a>
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation menu">&#9776;</button>
+        <ul class="nav-links" id="nav-menu" role="list">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#support">Support</a></li>
+            <li><a href="the-orange-filter-v1.zip" class="nav-cta">Download Free</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- Main content -->
+<main id="main-content" role="main">
+
+    <!-- Hero section -->
+    <section id="hero" class="section" aria-labelledby="hero-heading">
+        <div class="container">
+            <div class="hero">
+                <h1 id="hero-heading">Make Browsing<br>Great Again.</h1>
+                <p class="hero-subtitle">A smart, privacy-first filter that runs locally on your browser. Block unwanted political content and images instantly.</p>
+                <a href="the-orange-filter-v1.zip" class="btn btn-large" aria-label="Download The Orange Filter for Chrome">Add to Chrome</a>
+                <a href="https://github.com/Bjorn12341234/adblocker" class="btn btn-outline" target="_blank" rel="noopener" aria-label="View source code on GitHub">View Source</a>
+                <p class="cta-subtext">Privacy First. Local Only. Open Source.</p>
+            </div>
+
+            <!-- Trust signals -->
+            <div class="trust-bar" role="complementary" aria-label="Trust indicators">
+                <div class="trust-item">
+                    <span class="trust-number">100%</span>
+                    <span class="trust-label">Free &amp; Open Source</span>
+                </div>
+                <div class="trust-item">
+                    <span class="trust-number">Zero</span>
+                    <span class="trust-label">Data Collected</span>
+                </div>
+                <div class="trust-item">
+                    <span class="trust-number">Offline</span>
+                    <span class="trust-label">Processing</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features section -->
+    <section id="features" class="section section-alt" aria-labelledby="features-heading">
+        <div class="container">
+            <h2 id="features-heading" class="section-heading">Powerful Features, Complete Privacy</h2>
+            <p class="section-subheading">Everything runs locally on your device. No servers, no tracking, no compromise.</p>
+            <div class="features">
+                <article class="feature-card">
+                    <span class="feature-icon" aria-hidden="true">&#128683;</span>
+                    <h3>Smart Text Blocking</h3>
+                    <p>Automatically detects and hides headlines, articles, and social media posts containing specific political keywords. Browse your favorite news sites without the noise. Fully customizable keyword lists let you control exactly what gets filtered.</p>
+                </article>
+                <article class="feature-card">
+                    <span class="feature-icon" aria-hidden="true">&#128444;&#65039;</span>
+                    <h3>Smart Image Detection</h3>
+                    <p>Identifies and blurs political images in real-time, directly in your browser &mdash; no images ever leave your device. Fast, accurate, and constantly improving.</p>
+                </article>
+                <article class="feature-card">
+                    <span class="feature-icon" aria-hidden="true">&#128274;</span>
+                    <h3>Privacy First by Design</h3>
+                    <p>Zero data collection, zero analytics, zero tracking. All processing happens 100% offline on your device. No external servers, no API calls, no telemetry of any kind. Your browsing stays yours.</p>
+                </article>
+                <article class="feature-card">
+                    <span class="feature-icon" aria-hidden="true">&#9881;&#65039;</span>
+                    <h3>Customizable Filtering</h3>
+                    <p>Fine-tune your experience with adjustable keyword lists and sensitivity settings. Whitelist specific websites where you want to see all content. Toggle the filter on and off with a single click from the extension popup.</p>
+                </article>
+                <article class="feature-card">
+                    <span class="feature-icon" aria-hidden="true">&#9889;</span>
+                    <h3>Lightweight &amp; Fast</h3>
+                    <p>Designed for minimal performance impact. The extension loads efficiently and processes content in the background without slowing down your browsing. No heavy downloads or continuous resource usage.</p>
+                </article>
+                <article class="feature-card">
+                    <span class="feature-icon" aria-hidden="true">&#128736;&#65039;</span>
+                    <h3>Open Source &amp; Transparent</h3>
+                    <p>Fully open source on GitHub. Inspect every line of code, contribute improvements, or fork it for your own needs. Transparency is a core principle &mdash; you can verify exactly what the extension does.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works section -->
+    <section id="how-it-works" class="section" aria-labelledby="how-heading">
+        <div class="container">
+            <h2 id="how-heading" class="section-heading">How It Works</h2>
+            <p class="section-subheading">Get started in under a minute. No accounts, no configuration required.</p>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number" aria-hidden="true">1</div>
+                    <h3>Download &amp; Install</h3>
+                    <p>Download the extension zip file, extract it, and load it into Chrome via <code>chrome://extensions</code> with Developer Mode enabled. Takes less than 60 seconds.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number" aria-hidden="true">2</div>
+                    <h3>Browse as Normal</h3>
+                    <p>Visit any website. The Orange Filter automatically scans page content and images in the background, identifying and hiding political content before you see it.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number" aria-hidden="true">3</div>
+                    <h3>Enjoy the Calm</h3>
+                    <p>Read the news, scroll social media, and browse the web with peace of mind. Toggle filtering on or off anytime with a single click on the extension icon.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ section -->
+    <section id="faq" class="section" aria-labelledby="faq-heading">
+        <div class="container">
+            <h2 id="faq-heading" class="section-heading">Frequently Asked Questions</h2>
+            <p class="section-subheading">Everything you need to know about The Orange Filter.</p>
+            <div class="faq-list">
+                <details class="faq-item">
+                    <summary>Is The Orange Filter free?</summary>
+                    <div class="faq-answer">
+                        <p>Yes, The Orange Filter is completely free to use. There are no premium tiers, subscriptions, or hidden costs. The source code is open source and available on GitHub.</p>
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary>Does it collect my data?</summary>
+                    <div class="faq-answer">
+                        <p>No. The Orange Filter runs 100% offline on your device. It collects zero data, uses no analytics, and never transmits anything to external servers. All processing happens locally in your browser.</p>
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary>How does the image detection work?</summary>
+                    <div class="faq-answer">
+                        <p>The extension uses TensorFlow.js to run a machine learning model directly in your browser. When you visit a page, it analyzes images locally on your device in real-time to identify political content and blurs matching images. No images ever leave your computer.</p>
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary>Which browsers are supported?</summary>
+                    <div class="faq-answer">
+                        <p>The Orange Filter currently supports Google Chrome (and Chromium-based browsers like Brave and Edge). Firefox support is planned for a future release.</p>
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary>Can I whitelist specific websites?</summary>
+                    <div class="faq-answer">
+                        <p>Yes. The Orange Filter includes a whitelist feature that lets you disable filtering on specific websites. This is useful for sites where you want to see all content unfiltered, or for sites that don't work well with the filter enabled.</p>
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary>How do I install it?</summary>
+                    <div class="faq-answer">
+                        <p>Download the zip file from this page, extract it to a folder on your computer, then open <code>chrome://extensions</code> in Chrome, enable "Developer mode" in the top right corner, click "Load unpacked", and select the extracted folder. The filter starts working immediately on all new pages you visit.</p>
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary>Will it slow down my browser?</summary>
+                    <div class="faq-answer">
+                        <p>The Orange Filter is designed to be lightweight. The text filtering is near-instantaneous, and image processing runs in an isolated background worker to avoid affecting page performance. Most users report no noticeable slowdown.</p>
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary>What permissions does the extension need?</summary>
+                    <div class="faq-answer">
+                        <p>The extension requires: <strong>storage</strong> (to save your settings locally), <strong>activeTab</strong> (to know which site you're on for whitelist functionality), <strong>scripting</strong> (to inject the content filter), <strong>declarativeNetRequest</strong> (to block filtered URLs), and <strong>offscreen</strong> (to run image analysis in a background worker). No network or data-access permissions are needed.</p>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA / Support section -->
+    <section id="support" class="final-cta" aria-labelledby="support-heading">
+        <div class="container">
+            <h2 id="support-heading">Ready to Reclaim Your Feed?</h2>
+            <p>Download The Orange Filter and start browsing with peace of mind. Free, private, and open source.</p>
+            <a href="the-orange-filter-v1.zip" class="btn btn-large" aria-label="Download The Orange Filter for Chrome">Download for Chrome</a>
+            <br><br>
+            <p class="cta-subtext">Want to support development? Star the project on <a href="https://github.com/Bjorn12341234/adblocker" target="_blank" rel="noopener">GitHub</a> or spread the word.</p>
+        </div>
+    </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="site-footer" role="contentinfo">
+    <nav aria-label="Footer navigation">
+        <ul class="footer-links" role="list">
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="https://github.com/Bjorn12341234/adblocker" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://github.com/Bjorn12341234/adblocker/issues" target="_blank" rel="noopener">Report an Issue</a></li>
+        </ul>
+    </nav>
+    <p>&copy; 2026 The Orange Filter Project. Not affiliated with any political entity.</p>
+</footer>
+
+<!-- Mobile nav toggle script -->
+<script>
+    document.querySelector('.nav-toggle').addEventListener('click', function() {
+        var menu = document.getElementById('nav-menu');
+        var expanded = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', !expanded);
+        menu.classList.toggle('open');
+    });
+</script>
+
+</body>
+</html>

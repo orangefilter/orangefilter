@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>E2E Test Page</title>
+    <style>
+        .container { display: flex; flex-wrap: wrap; }
+        .item { margin: 10px; padding: 10px; border: 1px solid #ccc; width: 300px; }
+        img { width: 100%; height: auto; }
+    </style>
+</head>
+<body>
+    <h1>Trump Filter E2E Test Page</h1>
+    
+    <div class="container">
+        <div class="item" id="text-match">
+            <article>
+                <h2>Breaking News: Trump Rally</h2>
+                <p>Donald Trump spoke at a rally today.</p>
+            </article>
+        </div>
+
+        <div class="item" id="text-no-match">
+            <article>
+                <h2>Weather Update</h2>
+                <p>It is a sunny day in the city.</p>
+            </article>
+        </div>
+
+        <div class="item" id="alt-match">
+            <img src="https://via.placeholder.com/224?text=Trump" alt="Donald Trump" id="img-alt-match">
+        </div>
+
+        <div class="item" id="link-match">
+            <a href="/trump-news">
+                <img src="https://via.placeholder.com/224?text=News" id="img-link-match">
+                <span>More about Trump</span>
+            </a>
+        </div>
+
+        <div class="item" id="ai-match">
+            <p>AI should detect Trump here:</p>
+            <img src="/assets/orange_small.jpg" id="img-ai-match" alt="A politician" width="400" height="400">
+        </div>
+
+        <div class="item" id="ai-no-match">
+            <p>AI should NOT detect Trump here:</p>
+            <img src="/assets/safe.jpg" id="img-ai-no-match" alt="Nature">
+        </div>
+    </div>
+</body>
+</html>

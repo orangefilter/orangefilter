@@ -1,0 +1,21 @@
+node_modules/
+dist/
+.DS_Store
+coverage/
+*.log
+.gemini/
+src/assets/models/siglip-base-patch16-224/onnx/model.onnx
+images_to_train_on/
+debug_output*.txt
+tm-my-image-model.zip
+
+# Development files
+plan.md
+spec.md
+context.md
+project_dump.txt
+all_files.py
+*.zip
+
+# Training data
+training/datasets/ai_program/

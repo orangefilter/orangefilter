@@ -1,0 +1,11 @@
+{
+  "tfjsVersion": "1.7.4",
+  "tmVersion": "2.4.10",
+  "packageVersion": "0.8.4-alpha2",
+  "packageName": "@teachablemachine/image",
+  "timeStamp": "2026-01-26T20:47:11.512Z",
+  "userMetadata": {},
+  "modelName": "tm-my-image-model",
+  "labels": ["Orange", "Safe", "Hard negatives", "Class 4"],
+  "imageSize": 224
+}

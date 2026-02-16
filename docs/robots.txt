@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bjorn12341234.github.io/adblocker/sitemap.xml

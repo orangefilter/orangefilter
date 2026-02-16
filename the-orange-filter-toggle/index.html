@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Orange Filter - Make Browsing Great Again</title>
+    <meta name="description" content="A privacy-first Chrome Extension that uses a local filter to remove unwanted political content and images from your feed.">
+    <style>
+        :root {
+            --primary: #ff9800;
+            --primary-dark: #f57c00;
+            --text: #333;
+            --bg: #fdfdfd;
+            --card-bg: #ffffff;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--text);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span { color: var(--primary); }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 6rem 20px;
+            background: linear-gradient(135deg, #fff3e0 0%, #ffffff 100%);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 15px 35px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: transform 0.2s, background 0.2s;
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--text);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-left: 10px;
+        }
+
+        /* Features */
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 4rem 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        /* Installation Section */
+        .install-section {
+            background: #fff;
+            padding: 5rem 20px;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            text-align: center;
+        }
+
+        .install-steps {
+            text-align: left;
+            max-width: 600px;
+            margin: 2rem auto;
+            background: #f9f9f9;
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid #eee;
+        }
+
+        .install-steps ol {
+            padding-left: 1.5rem;
+        }
+
+        .install-steps li {
+            margin-bottom: 1rem;
+        }
+
+        /* Donation Section */
+        .donate-section {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 5rem 20px;
+            border-radius: 20px;
+            margin: 4rem 20px;
+        }
+
+        .donate-section h2 {
+            margin-top: 0;
+            font-size: 2.5rem;
+        }
+
+        .donate-section p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .paypal-btn {
+            background: #0070ba; /* PayPal Blue */
+            box-shadow: 0 4px 15px rgba(0, 112, 186, 0.4);
+        }
+        
+        .paypal-btn:hover {
+            background: #005ea6;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+            border-top: 1px solid #eee;
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 2.5rem; }
+            .nav-container { flex-direction: column; gap: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">The <span>Orange</span> Filter</a>
+            <div>
+                <a href="#features" style="text-decoration: none; color: #666; margin-right: 20px;">Features</a>
+                <a href="#install" style="text-decoration: none; color: #666; margin-right: 20px;">Install</a>
+                <a href="#privacy" style="text-decoration: none; color: #666; margin-right: 20px;">Privacy Policy</a>
+                <a href="#donate" class="btn" style="padding: 8px 20px; font-size: 0.9rem;">Donate</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <h1>Make Browsing<br>Great Again.</h1>
+        <p>A smart, privacy-first filter that runs locally on your browser. Block unwanted political content and images instantly.</p>
+        <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+            <a href="#install" class="btn">Add to Chrome</a>
+            <a href="https://github.com/Bjorn12341234/adblocker" class="btn btn-secondary">View Source</a>
+        </div>
+        <p style="font-size: 0.9rem; margin-top: 1rem; color: #888;">Privacy First. Local Only. Open Source.</p>
+    </div>
+
+    <div class="container" id="features">
+        <div class="grid">
+            <div class="card">
+                <h3>🚫 Smart Blocking</h3>
+                <p>Hide articles, posts, and comments containing specific keywords. The filter scans the page structure to remove entire content cards, not just text.</p>
+            </div>
+            <div class="card">
+                <h3>🔒 100% Privacy</h3>
+                <p>All processing happens <strong>locally</strong> on your device. No data is sent to the cloud. We don't track your history, and we never will.</p>
+            </div>
+            <div class="card">
+                <h3>🔍 Local filter</h3>
+                <p>The extension uses an advanced filter to blur or hide images directly in your browser based on your local settings.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="install-section" id="install">
+        <h2>How to Install</h2>
+        <p>Currently, the filter is available via direct download for Manual Installation. It will be in the Chrome Store later on.</p>
+        
+        <div class="install-steps">
+            <ol>
+                <li><strong>Download</strong> the extension ZIP file below.</li>
+                <li><strong>Extract</strong> the ZIP file on your computer and follow the instructions in the readme.</li>
+            </ol>
+        </div>
+
+        <a href="the-orange-filter-v1.zip" class="btn" download>
+            Download Extension (.zip)
+        </a>
+    </div>
+
+    <div class="donate-section" id="donate">
+        <h2>Support the Project</h2>
+        <p>The Orange Filter is open-source and free forever. If you enjoy a cleaner feed, consider buying me a coffee to keep the updates coming.</p>
+        
+        <a href="https://www.paypal.com/paypalme/" target="_blank" class="btn paypal-btn">
+            Donate via PayPal
+        </a>
+        <br><br>
+        <small style="opacity: 0.6">Every contribution helps improve the performance and coverage of the filter.</small>
+    </div>
+
+    <div class="container" id="privacy" style="max-width: 700px;">
+        <h2 style="text-align: center;">Privacy Policy</h2>
+        <p><strong>We do not collect any personal data.</strong></p>
+        <ul>
+            <li>No data is transmitted to external servers</li>
+            <li>No analytics or telemetry</li>
+            <li>No tracking of any kind</li>
+        </ul>
+        <p>All filtering happens locally on your device. The AI image analysis uses TensorFlow.js and runs entirely in your browser - images never leave your device. Your settings are stored locally in your browser's storage.</p>
+        <p>For questions, open an issue at <a href="https://github.com/Bjorn12341234/adblocker/issues" style="color: var(--primary);">GitHub</a>.</p>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 The Orange Filter Project. Open Source & Privacy First.</p>
+        <p><a href="#privacy" style="color: #888;">Privacy Policy</a></p>
+    </footer>
+
+</body>
+</html>

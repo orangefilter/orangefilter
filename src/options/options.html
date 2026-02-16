@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Orange Filter Options</title>
+  <style>
+    body {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 24px;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    .card {
+      background: white;
+      padding: 24px;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    h1 { margin-top: 0; color: #1a73e8; }
+    h2 { font-size: 18px; margin-top: 0; }
+    .section-desc { font-size: 14px; color: #666; margin-bottom: 16px; }
+    
+    .setting-row { margin-bottom: 20px; }
+    label { display: block; font-weight: 500; margin-bottom: 8px; }
+    
+    select, textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    textarea { height: 100px; resize: vertical; }
+
+    .btn-save {
+      background-color: #1a73e8;
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .btn-save:hover { background-color: #1765cc; }
+    
+    .status-msg {
+      margin-top: 10px;
+      font-size: 14px;
+      color: green;
+      display: none;
+    }
+    
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-left: 8px;
+    }
+    .badge-premium { background: #ffd700; color: #554400; }
+  </style>
+</head>
+<body>
+  <h1>Orange Filter Settings</h1>
+
+  <div class="card">
+    <h2>Sensitivity</h2>
+    <p class="section-desc">Adjust how aggressively the filter scans for content.</p>
+    <div class="setting-row">
+      <select id="sensitivity">
+        <option value="light">Light (URL & Main Headers)</option>
+        <option value="balanced">Balanced (Most content)</option>
+        <option value="strict">Strict (Aggressive DOM scanning)</option>
+        <option value="pictures-only">Pictures Only (No text filtering)</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Custom Keywords</h2>
+    <p class="section-desc">Enter words to block (one per line).</p>
+    <div class="setting-row">
+      <textarea id="userKeywords" placeholder="trump&#10;maga&#10;donald"></textarea>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Whitelist</h2>
+    <p class="section-desc">Domains where the filter is always disabled.</p>
+    <div class="setting-row">
+      <textarea id="whitelist" placeholder="example.com&#10;myfavoriteblog.org"></textarea>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>AI Filtering</h2>
+    <p class="section-desc">Enable Local Image Classification (Privacy-first, runs entirely in your browser).</p>
+    <div class="setting-row">
+      <label>
+        <input type="checkbox" id="aiEnabled">
+        Enable Local AI Scanning
+      </label>
+    </div>
+  </div>
+
+  <div style="text-align: right;">
+    <span id="status" class="status-msg">Settings saved!</span>
+    <button id="saveBtn" class="btn-save">Save Settings</button>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>
