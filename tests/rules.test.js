@@ -36,6 +36,19 @@ describe('Rule Generator', () => {
     });
   });
 
+  test('keyword rules use excludedRequestDomains (not deprecated excludedDomains)', () => {
+    const rules = generateRules({ whitelist: [], userKeywords: ['trump'] });
+    const blockRule = rules[0];
+    expect(blockRule.condition.excludedRequestDomains).toBeDefined();
+    expect(blockRule.condition.excludedDomains).toBeUndefined();
+  });
+
+  test('youtube.com is in the excluded domains list', () => {
+    const rules = generateRules({ whitelist: [], userKeywords: ['trump'] });
+    const blockRule = rules[0];
+    expect(blockRule.condition.excludedRequestDomains).toContain('youtube.com');
+  });
+
   test('handles mixed lists with correct ids', () => {
     const lists = {
       whitelist: ['good.com'],

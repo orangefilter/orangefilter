@@ -24,12 +24,15 @@ describe('DOM Filtering', () => {
 
     scanAndFilter(['trump']);
 
-    expect(document.getElementById('match').style.display).toBe('none');
     expect(document.getElementById('match').dataset.orangeFilterHidden).toBe(
       'true'
     );
-    expect(document.getElementById('no-match').style.display).not.toBe('none');
-    expect(document.getElementById('match-2').style.display).toBe('none');
+    expect(
+      document.getElementById('no-match').dataset.orangeFilterHidden
+    ).toBeUndefined();
+    expect(document.getElementById('match-2').dataset.orangeFilterHidden).toBe(
+      'true'
+    );
   });
 
   test('scanAndFilter ignores already hidden elements', () => {

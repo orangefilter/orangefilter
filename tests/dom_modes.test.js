@@ -16,8 +16,12 @@ describe('DOM Filtering Modes', () => {
 
     scanAndFilter(['orange'], { sensitivity: 'balanced' });
 
-    expect(document.getElementById('match').style.display).toBe('none');
-    expect(document.getElementById('no-match').style.display).not.toBe('none');
+    expect(document.getElementById('match').dataset.orangeFilterHidden).toBe(
+      'true'
+    );
+    expect(
+      document.getElementById('no-match').dataset.orangeFilterHidden
+    ).toBeUndefined();
   });
 
   test('scanAndFilter DOES NOT hide text containers in "pictures-only" mode', () => {
@@ -29,8 +33,12 @@ describe('DOM Filtering Modes', () => {
     scanAndFilter(['orange'], { sensitivity: 'pictures-only' });
 
     // Text container should NOT be hidden
-    expect(document.getElementById('match').style.display).not.toBe('none');
-    expect(document.getElementById('no-match').style.display).not.toBe('none');
+    expect(
+      document.getElementById('match').dataset.orangeFilterHidden
+    ).toBeUndefined();
+    expect(
+      document.getElementById('no-match').dataset.orangeFilterHidden
+    ).toBeUndefined();
   });
 
   test('scanAndFilter STILL hides images in "pictures-only" mode', () => {

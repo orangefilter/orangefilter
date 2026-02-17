@@ -97,7 +97,15 @@
     '.g',
     '.b_algo',
 
-    // Facebook Watch pages - NEW
+    // Reddit
+    'shreddit-post',
+    // Hacker News
+    'tr.athing',
+    // YouTube
+    'ytd-video-renderer',
+    'ytd-rich-item-renderer',
+
+    // Facebook Watch pages
     'div[data-pagelet="WatchPermalinkVideo"]',
     'div[data-pagelet="VideoMetadata"]',
     'div[data-pagelet="TahoeRightRail"]',
@@ -142,7 +150,14 @@
       element.parentNode.insertBefore(placeholder, element);
       element.style.display = 'none';
     } else {
-      element.style.display = 'none';
+      element.style.transition =
+        'max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease, margin 0.3s ease';
+      element.style.overflow = 'hidden';
+      element.style.maxHeight = '0';
+      element.style.padding = '0';
+      element.style.margin = '0';
+      element.style.border = '0';
+      element.style.opacity = '0';
     }
 
     element.dataset.orangeFilterHidden = 'true';

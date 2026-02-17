@@ -14,6 +14,14 @@ export const DEFAULT_SELECTORS = [
   'div[role="listitem"]',
   '.g', // Google Search Result
   '.b_algo', // Bing Search Result
+
+  // Reddit
+  'shreddit-post',
+  // Hacker News
+  'tr.athing',
+  // YouTube
+  'ytd-video-renderer',
+  'ytd-rich-item-renderer',
 ];
 
 /**
@@ -255,7 +263,14 @@ function hideElement(el, reason) {
     el.parentNode.insertBefore(placeholder, el);
     el.style.display = 'none';
   } else {
-    el.style.display = 'none';
+    el.style.transition =
+      'max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease, margin 0.3s ease';
+    el.style.overflow = 'hidden';
+    el.style.maxHeight = '0';
+    el.style.padding = '0';
+    el.style.margin = '0';
+    el.style.border = '0';
+    el.style.opacity = '0';
   }
   el.dataset.orangeFilterHidden = 'true';
   console.log(`Orange Filter: Hidden an element (${reason}).`);

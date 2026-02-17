@@ -44,7 +44,7 @@ export function generateRules(lists, settings = {}) {
           urlFilter: `*${keyword}*`,
           resourceTypes: ['main_frame'],
           isUrlFilterCaseSensitive: false,
-          excludedDomains: [
+          excludedRequestDomains: [
             'google.com',
             'bing.com',
             'duckduckgo.com',
@@ -52,6 +52,7 @@ export function generateRules(lists, settings = {}) {
             'baidu.com',
             'yandex.ru',
             'yandex.com',
+            'youtube.com',
           ],
         },
       });
