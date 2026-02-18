@@ -2,9 +2,9 @@ const DEFAULT_SETTINGS = {
   version: 2,
   settings: {
     enabledGlobal: true,
-    sensitivity: 'balanced',
+    sensitivity: 'strict',
     aiMode: 'mobilenet',
-    aiConsent: false,
+    aiConsent: true,
   },
   lists: {
     whitelist: ['example.com'],

@@ -22,9 +22,9 @@
     version: 2,
     settings: {
       enabledGlobal: true,
-      sensitivity: 'balanced',
+      sensitivity: 'strict',
       aiMode: 'mobilenet',
-      aiConsent: false,
+      aiConsent: true,
     },
     lists: {
       whitelist: ['example.com'],
@@ -76,7 +76,7 @@
         },
       });
     } catch (error) {
-      console.error('Failed to update stats:', error);
+      // Stats update failure is non-critical, ignore silently
     }
   }
 
@@ -161,7 +161,7 @@
     }
 
     element.dataset.orangeFilterHidden = 'true';
-    console.log(`Orange Filter: Hidden element (${reason})`);
+    console.debug(`Orange Filter: Hidden element (${reason})`);
     updateStats(1);
   }
 
@@ -352,8 +352,8 @@
             blurElement(img, `AI low confidence (${confidence}%)`);
           }
         }
-      } catch (error) {
-        console.error('Error scanning image:', error);
+      } catch {
+        // Image scan failures (CORS, decode errors) are expected — skip silently
       } finally {
         delete img.dataset.orangeFilterScanning;
         scanNext();
@@ -383,7 +383,7 @@
     };
 
     element.addEventListener('click', clickHandler);
-    console.log(`Orange Filter: Blurred element (${reason})`);
+    console.debug(`Orange Filter: Blurred element (${reason})`);
     updateStats(1);
   }
 
@@ -412,7 +412,7 @@
       const response = await fetch(url);
       return response.ok ? await response.blob() : null;
     } catch (error) {
-      console.warn('Content Script fetch failed:', url);
+      // CORS fetch failure — expected for cross-origin images
       return null;
     }
   }
@@ -444,7 +444,7 @@
         config.settings.enabledGlobal === false ||
         config.lists.whitelist.includes(hostname)
       ) {
-        console.log('Orange Filter: Disabled for this site');
+        console.debug('Orange Filter: Disabled for this site');
         return;
       }
 
@@ -463,10 +463,8 @@
         });
       }
     } catch (error) {
-      if (error.message.includes('Extension context invalidated')) {
-        console.log('Orange Filter: Context invalidated. Please refresh.');
-      } else {
-        console.error('Orange Filter Init Error:', error);
+      if (!error.message.includes('Extension context invalidated')) {
+        console.warn('Orange Filter Init Error:', error);
       }
     }
   }

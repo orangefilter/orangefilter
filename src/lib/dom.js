@@ -136,7 +136,7 @@ async function fetchImageAsBlob(url) {
     if (!response.ok) return null;
     return await response.blob();
   } catch (error) {
-    console.warn('Content Script fetch failed for:', url, error);
+    // CORS fetch failure — expected for cross-origin images
     return null;
   }
 }
@@ -243,7 +243,7 @@ async function scanImagesAI(images, settings) {
         }
       }
     } catch (error) {
-      console.error('Error scanning image with AI:', error);
+      // Image scan failure (CORS, decode) — skip silently
       img.dataset.orangeError = error.toString();
     } finally {
       delete img.dataset.orangeFilterScanning;
@@ -273,7 +273,7 @@ function hideElement(el, reason) {
     el.style.opacity = '0';
   }
   el.dataset.orangeFilterHidden = 'true';
-  console.log(`Orange Filter: Hidden an element (${reason}).`);
+  console.debug(`Orange Filter: Hidden an element (${reason}).`);
 
   // Track stats
   incrementBlockedCount(1);
@@ -299,14 +299,14 @@ export function blurElement(el, reason) {
     e.preventDefault();
     e.stopPropagation();
     if (confirm('Report this image as a False Positive?')) {
-      console.log(
+      console.debug(
         `Orange Filter: User reported false positive (blur) for ${el.src || el.currentSrc}. Reason: ${reason}`
       );
       el.click(); // Reveal it too
     }
   });
 
-  console.log(`Orange Filter: Blurred an element (${reason}).`);
+  console.debug(`Orange Filter: Blurred an element (${reason}).`);
   incrementBlockedCount(1);
 }
 
@@ -364,7 +364,7 @@ function createPlaceholder(img, reason) {
   report.style.opacity = '0.7';
   report.addEventListener('click', (e) => {
     e.stopPropagation();
-    console.log(
+    console.debug(
       `Orange Filter: User reported false positive for ${img.src || img.currentSrc}. Reason: ${reason}`
     );
     placeholder.click();

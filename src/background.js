@@ -1,19 +1,19 @@
 import { updateRules, sendMessageToOffscreen } from './lib/backgroundLogic';
 
-console.log('Orange Filter Background Service Started');
+console.debug('Orange Filter Background Service Started');
 
 // Initialize on install/update
 chrome.runtime.onInstalled.addListener(async () => {
-  console.log('Extension installed/updated. Initializing...');
+  console.debug('Extension installed/updated. Initializing...');
   await updateRules();
   await updateBadge();
 
   // Test offscreen bridge
   try {
     const response = await sendMessageToOffscreen('PING');
-    console.log('Offscreen Bridge Test:', response);
-  } catch (e) {
-    console.error('Offscreen Bridge Test Failed:', e);
+    console.debug('Offscreen Bridge Test:', response);
+  } catch {
+    // Offscreen bridge test can fail on first install — non-critical
   }
 });
 
@@ -36,7 +36,7 @@ chrome.runtime.onStartup.addListener(updateBadge);
 chrome.storage.onChanged.addListener((changes, area) => {
   if (area === 'local') {
     if (changes.lists) {
-      console.log('Lists changed. Updating rules...');
+      console.debug('Lists changed. Updating rules...');
       updateRules();
     }
     if (changes.stats) {
@@ -57,7 +57,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     handleBackgroundMessage(message, sender)
       .then(sendResponse)
       .catch((error) => {
-        console.error('Background message handler failed:', error);
         sendResponse({ success: false, error: error.message });
       });
     return true;
@@ -80,16 +79,19 @@ async function handleBackgroundMessage(message, _sender) {
             });
         }
         let imageData = message.data.data;
-        let imageType = message.data.type || 'blob';
 
-        // If no data provided (legacy or failed in content script), try to fetch here
+        // If no data provided, try to fetch and convert to base64.
+        // Chrome messaging serializes to JSON so only strings (base64) work.
         if (!imageData && message.data.url) {
           try {
             const response = await fetch(message.data.url);
-            imageData = await response.blob();
-            imageType = 'blob';
+            const blob = await response.blob();
+            imageData = await new Promise((resolve) => {
+              const reader = new FileReader();
+              reader.onloadend = () => resolve(reader.result);
+              reader.readAsDataURL(blob);
+            });
           } catch (fetchError) {
-            console.error('Background fetch failed:', fetchError);
             return { success: false, error: fetchError.message };
           }
         }
@@ -98,15 +100,14 @@ async function handleBackgroundMessage(message, _sender) {
           return { success: false, error: 'No image data available' };
         }
 
-        // Forward to offscreen
+        // Forward to offscreen (always base64 string)
         return await sendMessageToOffscreen('SCAN_IMAGE', {
-          type: imageType,
+          type: 'base64',
           data: imageData,
           sensitivity: message.data.sensitivity,
         });
-      } catch (error) {
-        console.error('Error fetching image for check:', error);
-        return { success: false, error: error.message };
+      } catch {
+        return { success: false, error: 'Image check failed' };
       }
     default:
       return { success: false, error: 'Unknown background message type' };

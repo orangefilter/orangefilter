@@ -22,7 +22,7 @@ export async function incrementBlockedCount(count = 1) {
       },
     });
   } catch (error) {
-    console.error('Failed to update stats:', error);
+    // Stats update failure is non-critical
   }
 }
 

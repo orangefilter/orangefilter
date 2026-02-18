@@ -62,27 +62,8 @@ async function init() {
   });
 
   aiToggle.addEventListener('change', async () => {
-    if (aiToggle.checked && !data.settings.aiConsent) {
-      const consent = confirm(
-        'Privacy Notice: Enabling AI Filtering will process images locally on your device. ' +
-          'No image data leaves your browser. This may impact battery life and performance. ' +
-          'Do you consent to local AI processing?'
-      );
-
-      if (consent) {
-        data.settings.aiConsent = true;
-        data.settings.aiMode = 'mobilenet';
-        // Trigger load
-        chrome.runtime.sendMessage({
-          target: 'background',
-          type: 'CHECK_IMAGE',
-          data: { url: '' },
-        });
-      } else {
-        aiToggle.checked = false;
-        return;
-      }
-    } else if (aiToggle.checked) {
+    if (aiToggle.checked) {
+      data.settings.aiConsent = true;
       data.settings.aiMode = 'mobilenet';
       // Trigger load
       chrome.runtime.sendMessage({
@@ -93,7 +74,7 @@ async function init() {
     } else {
       data.settings.aiMode = 'none';
     }
-    console.log('Saving settings:', data.settings);
+    console.debug('Saving settings:', data.settings);
     await setStorage(data);
   });
 

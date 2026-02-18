@@ -20,10 +20,10 @@ export async function updateRules() {
       addRules: newRules,
     });
 
-    console.log(`Rules updated. Active rules: ${newRules.length}`);
+    console.debug(`Rules updated. Active rules: ${newRules.length}`);
     return newRules.length;
   } catch (error) {
-    console.error('Failed to update rules:', error);
+    console.warn('Failed to update rules:', error);
     throw error;
   }
 }
@@ -43,10 +43,10 @@ async function closeOffscreenDocument() {
   try {
     if (await hasOffscreenDocument()) {
       await chrome.offscreen.closeDocument();
-      console.log('Offscreen document closed due to inactivity.');
+      console.debug('Offscreen document closed due to inactivity.');
     }
   } catch (e) {
-    console.log('Offscreen document already closed or error:', e);
+    // Already closed — ignore
   }
 }
 
@@ -73,7 +73,7 @@ export async function setupOffscreen() {
 
     try {
       await creating;
-      console.log('Offscreen document created');
+      console.debug('Offscreen document created');
     } catch (err) {
       // if it already exists, that's fine (Chrome might throw if we race check and create)
       if (!err.message.startsWith('Only a single offscreen')) {
