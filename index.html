@@ -477,6 +477,39 @@
             margin: 0 auto 2rem;
         }
 
+        /* Donate buttons */
+        .donate-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+        .donate-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .donate-btn:hover,
+        .donate-btn:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .donate-btn-coffee {
+            background: #FFDD00;
+            color: #000;
+        }
+        .donate-btn-paypal {
+            background: #0070ba;
+            color: #fff;
+        }
+
         /* Footer */
         .site-footer {
             text-align: center;
@@ -697,7 +730,7 @@
                 <details class="faq-item">
                     <summary>What permissions does the extension need?</summary>
                     <div class="faq-answer">
-                        <p>The extension requires: <strong>storage</strong> (to save your settings locally), <strong>activeTab</strong> (to know which site you're on for whitelist functionality), <strong>scripting</strong> (to inject the content filter), <strong>declarativeNetRequest</strong> (to block filtered URLs), and <strong>offscreen</strong> (to run image analysis in a background worker). No network or data-access permissions are needed.</p>
+                        <p>The extension requires: <strong>storage</strong> (to save your settings locally), <strong>activeTab</strong> (to know which site you're on for whitelist functionality), <strong>declarativeNetRequest</strong> (to block filtered URLs), and <strong>offscreen</strong> (to run image analysis in a background worker). No network or data-access permissions are needed.</p>
                     </div>
                 </details>
             </div>
@@ -710,8 +743,11 @@
             <h2 id="support-heading">Ready to Reclaim Your Feed?</h2>
             <p>Download The Orange Filter and start browsing with peace of mind. Free, private, and open source.</p>
             <a href="https://github.com/orangefilter/orangefilter/raw/main/theorangefilter.zip" class="btn btn-large" aria-label="Download The Orange Filter for Chrome">Download for Chrome</a>
-            <br><br>
-            <p class="cta-subtext">Want to support development? Star the project on <a href="https://github.com/orangefilter/orangefilter" target="_blank" rel="noopener">GitHub</a> or spread the word.</p>
+            <p class="cta-subtext">Want to support development? Consider a small donation, star the project on <a href="https://github.com/orangefilter/orangefilter" target="_blank" rel="noopener">GitHub</a>, or spread the word.</p>
+            <div class="donate-buttons">
+                <a href="https://buymeacoffee.com/YOUR_USERNAME" class="donate-btn donate-btn-coffee" target="_blank" rel="noopener" aria-label="Support via Buy Me a Coffee">&#9749; Buy Me a Coffee</a>
+                <a href="https://paypal.me/YOUR_USERNAME" class="donate-btn donate-btn-paypal" target="_blank" rel="noopener" aria-label="Support via PayPal">&#128179; PayPal</a>
+            </div>
         </div>
     </section>
 
