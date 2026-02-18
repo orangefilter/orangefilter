@@ -4,13 +4,7 @@
   "short_name": "OrangeFilter",
   "description": "A smart content filter that blocks specific political figures from your browsing experience.",
   "version": "1.0.0",
-  "permissions": [
-    "storage",
-    "offscreen",
-    "declarativeNetRequest",
-    "activeTab",
-    "scripting"
-  ],
+  "permissions": ["storage", "offscreen", "declarativeNetRequest", "activeTab"],
   "host_permissions": ["<all_urls>"],
   "background": {
     "service_worker": "background.js"
